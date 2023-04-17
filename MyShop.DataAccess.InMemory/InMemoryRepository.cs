@@ -5,21 +5,24 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
+using MyShop.Core;
 
 namespace MyShop.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
         string className;
 
-        public InMemoryRepository() {
+        public InMemoryRepository()
+        {
             this.className = typeof(T).Name;
 
             items = cache[this.className] as List<T>;
 
-            if (items == null) {
+            if (items == null)
+            {
                 items = new List<T>();
             }
 
